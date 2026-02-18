@@ -67,8 +67,8 @@ keybind = ctrl+b>k=goto_split:up
 keybind = ctrl+b>l=goto_split:right
 keybind = ctrl+b>c=close_surface
 
-keybind = global:ctrl+alt+super+g=toggle_quick_terminal
-keybind = global:ctrl+alt+super+shift+g=new_window
+# keybind = global:ctrl+alt+super+g=toggle_quick_terminal
+# keybind = global:ctrl+alt+super+shift+g=new_window
 quick-terminal-position = top
 quick-terminal-size = 100%
 quick-terminal-autohide = false
@@ -81,5 +81,5 @@ macos-titlebar-style = "tabs"
 #background-blur = 20
 
 auto-update-channel = tip
-key-remap = ctrl=cmd
-key-remap = cmd=ctrl
+# key-remap = ctrl=cmd
+# key-remap = cmd=ctrl

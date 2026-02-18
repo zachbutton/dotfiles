@@ -15,3 +15,9 @@
 !/.config/jj/
 /.config/jj/*
 !/.config/jj/config.toml
+!/.config/niri/
+!/.config/niri/**
+!/.wallpapers/
+!/.wallpapers/**
+!/.config/waybar/
+!/.config/waybar/**

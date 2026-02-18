@@ -3,3 +3,6 @@
 .config/nvim/
 .config/ghostty/
 .config/jj/config.toml
+.config/niri/
+.wallpapers/
+.config/waybar/
