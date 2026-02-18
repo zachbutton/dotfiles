@@ -1,0 +1,5 @@
+.nadm/
+.gitignore
+.config/nvim/
+.config/ghostty/
+.config/jj/config.toml

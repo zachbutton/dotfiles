@@ -1,0 +1,86 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Zach Button"
+email = "zachrey.button@gmail.com"
+
+[template-aliases]
+'format_short_change_id(id)' = 'id.shortest()'
+'format_short_commit_id(id)' = 'id.shortest()'
+
+[aliases]
+tug = ["bookmark", "move", "--from", "prev_bookmark(@)", "--to", "@-"]
+fmt = ["util", "exec", "--", "nix-shell-fmt"]
+done = ["squash", "-ki", "-t"]
+remain = ["util", "exec", "--", "bash", "-c", """
+#!/usr/bin/env bash
+rev=""
+if [ "$1" = "" ]; then
+	rev="@"
+else
+	rev="$1"
+fi
+jj rebase -s "roots(fork($rev, trunk()))" -d "trunk()"
+""", ""]
+desk = ["util", "exec", "--", "bash", "-c", """
+#!/usr/bin/env bash
+rev=""
+if [ "$1" = "" ]; then
+	rev="trunk()"
+else
+	rev="$1"
+fi
+jj log -r "desk($rev)"
+""", ""]
+todo = ["util", "exec", "--", "bash", "-c", """
+#!/usr/bin/env bash
+rev=$1
+shift
+jj new -r "$rev" -m "TODO: $*" --no-edit
+""", ""]
+diff-branch = ['diff', '-r', 'branch_diff(@)', '--git', '-w']
+bump = ['metaedit', '--update-change-id']
+accumulate = ['squash', '-t', '@', '-f', '@+::']
+zoom = ["util", "exec", "--", "bash", "-c", """
+#!/usr/bin/env bash
+rev=""
+if [ "$1" = "" ]; then
+	rev="@"
+else
+	rev="$1"
+fi
+jj log -r "zoom($rev)"
+""", ""]
+
+[revset-aliases]
+"my_mutable" = "mine() & mutable()"
+"active" = "bookmarks() | heads(my_mutable)"
+"fork(r, t)" = "::r ~ ::t"
+"fork_base(r, t)" = "fork(r, t)- & ::t"
+"desk(r)" = "r | fork_base(active, r) | active"
+
+"prev_bookmark(r)" = "heads(::r- & bookmarks() & ~trunk())"
+"branch_diff(r)" = "(all() ~ (::prev_bookmark(prev_bookmark(@)) | immutable()))::prev_bookmark(@)"
+'why_immutable(r)' = 'r | roots(r:: & immutable_heads())'
+
+"zoom_start(r)" = "latest(((~::r)- | bookmarks()) & ::r & ~r)"
+"zoom_end(r)" = "r:: & coalesce(~(r:: & bookmarks())+::, r::)"
+"zoom(r)" = "zoom_start(r)::zoom_end(r)"
+
+"tangential(r)" = "~::wx"
+
+[ui]
+pager = "delta"
+default-command = ["log"]
+editor = "nvim"
+merge-editor = "meld"
+color = "always"
+
+[core]
+#fsmonitor = "watchman"
+
+#[core.watchman]
+#register_snapshot_trigger = true
+
+[snapshot]
+max-new-file-size = 104857600

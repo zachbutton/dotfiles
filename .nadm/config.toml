@@ -1,0 +1,3 @@
+[aliases]
+
+dot = ["util", "exec", "--", "bash", "-lc", "~/.nadm/dot.sh \"$@\"", ""]
