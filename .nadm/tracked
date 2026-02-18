@@ -3,3 +3,4 @@
 .config/nvim/
 .config/ghostty/
 .config/jj/config.toml
+.hammerspoon/

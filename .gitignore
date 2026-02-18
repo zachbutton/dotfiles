@@ -15,3 +15,5 @@
 !/.config/jj/
 /.config/jj/*
 !/.config/jj/config.toml
+!/.hammerspoon/
+!/.hammerspoon/**
